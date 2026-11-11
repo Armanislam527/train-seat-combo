@@ -6,6 +6,7 @@ Seat Combo is a React app for exploring Bangladesh train timetables.
 
 - `/home` — the landing page
 - `/app` (also `/App`) — train search and schedules
+- `/privacy-policy` — the app privacy policy
 - `/` — redirects to `/home`
 
 ## Local development

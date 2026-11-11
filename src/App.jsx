@@ -1,4 +1,5 @@
 import { Link, Navigate, Route, Routes } from "react-router-dom";
+import PrivacyPolicy from "./PrivacyPolicy.jsx";
 import TrainTimetable from "./TrainTimetable.jsx";
 
 function BrandMark() {
@@ -49,6 +50,9 @@ function Footer() {
         <Link className="brand" to="/home">
           <BrandMark />
           Seat Combo
+        </Link>
+        <Link className="footer-link" to="/privacy-policy">
+          Privacy Policy
         </Link>
         <span>Made for Bangladesh rail journeys.</span>
       </div>
@@ -302,6 +306,7 @@ export default function App() {
       <Route path="/" element={<Navigate to="/home" replace />} />
       <Route path="/home" element={<LandingPage />} />
       <Route path="/app" element={<AppPage />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
   );
