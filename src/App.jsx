@@ -1,5 +1,6 @@
 import { Link, Navigate, Route, Routes } from "react-router-dom";
 import PrivacyPolicy from "./PrivacyPolicy.jsx";
+import TermsOfService from "./TermsOfService.jsx";
 import TrainTimetable from "./TrainTimetable.jsx";
 
 function BrandMark() {
@@ -50,6 +51,9 @@ function Footer() {
         <Link className="brand" to="/home">
           <BrandMark />
           Seat Combo
+        </Link>
+        <Link className="footer-link" to="/terms-of-service">
+          Terms of Service
         </Link>
         <Link className="footer-link" to="/privacy-policy">
           Privacy Policy
@@ -306,6 +310,7 @@ export default function App() {
       <Route path="/" element={<Navigate to="/home" replace />} />
       <Route path="/home" element={<LandingPage />} />
       <Route path="/app" element={<AppPage />} />
+      <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>

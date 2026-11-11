@@ -1,0 +1,59 @@
+TERMS OF SERVICE
+Train Seat
+
+Last updated: November 12, 2026
+
+These Terms of Service ("Terms") apply to your use of the Train Seat mobile application ("the app"). By installing or using the app, you agree to these Terms. If you do not agree, do not use the app.
+
+1. ABOUT THE APP
+
+Train Seat provides tools to view train schedules and seat-availability information and to access the Bangladesh Railway e-ticketing website at eticket.railway.gov.bd through an embedded web browser (WebView).
+
+Train Seat is an independent application. It is not operated by, affiliated with, or endorsed by Bangladesh Railway, Shohoz, or any government agency. Names and services belonging to third parties remain the property of their respective owners.
+
+2. INFORMATIONAL PURPOSE AND TICKETS
+
+Schedules, routes, fares, and seat-availability information are provided for convenience and may be incomplete, delayed, or inaccurate. Availability can change at any time. The app does not guarantee that a train runs as shown, that a seat is available, or that a displayed fare or route is current.
+
+The app does not issue or guarantee railway tickets. A ticket is booked only through the official Bangladesh Railway e-ticketing service, subject to that service's rules and confirmation. Always verify journey details, availability, fare, and booking status on the official service before making travel decisions or payments.
+
+3. THIRD-PARTY SERVICES
+
+When you use the Bangladesh Railway e-ticketing service, your use is subject to that service's terms, privacy notices, and availability. Information you enter there, including account, passenger, journey, booking, or payment details, is handled by Bangladesh Railway and its service providers under their practices. Train Seat does not control or take responsibility for third-party websites, services, content, transactions, or policies.
+
+The app may display non-personalized advertisements provided by Google AdMob. Such ads and related data processing are subject to Google's terms and policies.
+
+4. YOUR RESPONSIBILITIES
+
+You agree to:
+- Use the app only for lawful purposes and in accordance with these Terms.
+- Provide accurate information when using the Railway e-ticketing service.
+- Keep your Railway account credentials and device secure, and promptly sign out when appropriate.
+- Not misuse, disrupt, or attempt to interfere with the app, its services, or third-party services.
+- Follow all applicable rules and terms when booking or travelling.
+
+You are responsible for activity performed through your device and any account you use with a third-party service.
+
+5. PRIVACY
+
+Use of the app is also subject to the Train Seat Privacy Policy. The app may store Railway authentication or session values on your device to support Railway-related features. Clearing app data or uninstalling the app may remove locally stored data, but does not delete information held by Bangladesh Railway, Google, or other third parties. Review the Privacy Policy for details.
+
+6. AVAILABILITY AND CHANGES
+
+We may update, suspend, or discontinue any part of the app at any time, including to maintain or improve it. Features may depend on data or services operated by third parties, which may change or become unavailable without notice.
+
+7. DISCLAIMER
+
+The app is provided on an "as is" and "as available" basis to the extent permitted by law. We do not warrant that the app will be uninterrupted, error-free, secure, or that its information will always be accurate or current. Nothing in these Terms excludes rights or remedies that cannot lawfully be excluded.
+
+8. LIMITATION OF LIABILITY
+
+To the extent permitted by applicable law, Train Seat and its developer are not liable for indirect or consequential loss, or for loss arising from inaccurate or unavailable schedule or seat information, missed journeys, unsuccessful bookings, payment issues, or the acts or omissions of third-party services. This does not limit liability that cannot lawfully be limited.
+
+9. CHANGES TO THESE TERMS
+
+These Terms may be updated when the app or its services change. The latest version should be made available through the app's store listing or the website where these Terms are published. Continued use of the app after updated Terms are made available means you accept the updated Terms, to the extent permitted by law.
+
+10. CONTACT
+
+For questions about these Terms, use the developer contact information shown on the Train Seat Google Play listing.
