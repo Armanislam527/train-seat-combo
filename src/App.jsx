@@ -1,4 +1,5 @@
 import { Link, Navigate, Route, Routes } from "react-router-dom";
+import CommunityPage from "./CommunityPage.jsx";
 import PrivacyPolicy from "./PrivacyPolicy.jsx";
 import TermsOfService from "./TermsOfService.jsx";
 import TrainTimetable from "./TrainTimetable.jsx";
@@ -19,27 +20,20 @@ function BrandMark() {
   );
 }
 
-function Header({ app = false }) {
+function Header() {
   return (
-    <header className="wrap topbar">
-      <Link className="brand" to="/home" aria-label="Seat Combo home">
-        <BrandMark />
-        Seat Combo
-      </Link>
-      <nav className="nav" aria-label="Main navigation">
-        {app ? (
-          <>
-            <Link to="/home">Home</Link>
-            <Link className="nav-cta" to="/app">Train timetable</Link>
-          </>
-        ) : (
-          <>
-            <a href="#features">Features</a>
-            <a href="#how-it-works">How it works</a>
-            <Link className="nav-cta" to="/app">Explore timetable</Link>
-          </>
-        )}
-      </nav>
+    <header className="site-header">
+      <div className="wrap topbar">
+        <Link className="brand" to="/home" aria-label="Seat Combo home">
+          <BrandMark />
+          Seat Combo
+        </Link>
+        <nav className="nav" aria-label="Main navigation">
+          <Link to="/home">Home</Link>
+          <Link className="timetable-link" to="/app">Train timetable</Link>
+          <Link className="nav-cta" to="/community">Join the community</Link>
+        </nav>
+      </div>
     </header>
   );
 }
@@ -64,10 +58,19 @@ function Footer() {
   );
 }
 
-function LandingPage() {
+function PageLayout({ children }) {
   return (
     <>
       <Header />
+      {children}
+      <Footer />
+    </>
+  );
+}
+
+function LandingPage() {
+  return (
+    <PageLayout>
       <main>
         <section className="wrap hero" aria-labelledby="hero-title">
           <div>
@@ -279,15 +282,13 @@ function LandingPage() {
           </div>
         </section>
       </main>
-      <Footer />
-    </>
+    </PageLayout>
   );
 }
 
 function AppPage() {
   return (
-    <>
-      <Header app />
+    <PageLayout>
       <main className="wrap app-page">
         <section className="section-heading">
           <p className="eyebrow">Try it here</p>
@@ -299,8 +300,7 @@ function AppPage() {
         </section>
         <TrainTimetable />
       </main>
-      <Footer />
-    </>
+    </PageLayout>
   );
 }
 
@@ -310,8 +310,30 @@ export default function App() {
       <Route path="/" element={<Navigate to="/home" replace />} />
       <Route path="/home" element={<LandingPage />} />
       <Route path="/app" element={<AppPage />} />
-      <Route path="/terms-of-service" element={<TermsOfService />} />
-      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route
+        path="/community"
+        element={
+          <PageLayout>
+            <CommunityPage />
+          </PageLayout>
+        }
+      />
+      <Route
+        path="/terms-of-service"
+        element={
+          <PageLayout>
+            <TermsOfService />
+          </PageLayout>
+        }
+      />
+      <Route
+        path="/privacy-policy"
+        element={
+          <PageLayout>
+            <PrivacyPolicy />
+          </PageLayout>
+        }
+      />
       <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
   );
