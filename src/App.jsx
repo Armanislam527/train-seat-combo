@@ -3,7 +3,7 @@ import CommunityPage from "./CommunityPage.jsx";
 import PrivacyPolicy from "./PrivacyPolicy.jsx";
 import TermsOfService from "./TermsOfService.jsx";
 import TrainTimetable from "./TrainTimetable.jsx";
-
+import app from './../assets/app.svg';
 function BrandMark() {
   return (
     <span className="brand-mark" aria-hidden="true">
@@ -16,7 +16,7 @@ function BrandMark() {
           strokeLinejoin="round"
         />
       </svg> */}
-      <img src="./../assets/bangladesh_train_icon_pure.svg" alt="Our logo" className="app-logo" />
+      <img src={app} alt="Our logo" className="app-logo" />
     </span>
   );
 }
