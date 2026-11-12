@@ -16,7 +16,7 @@ function BrandMark() {
           strokeLinejoin="round"
         />
       </svg> */}
-      <img src="./../assets/app.png" alt="Our logo" className="app-logo" />
+      <img src="./../assets/bangladesh_train_icon_pure.svg" alt="Our logo" className="app-logo" />
     </span>
   );
 }
