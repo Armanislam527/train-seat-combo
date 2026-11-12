@@ -3,20 +3,11 @@ import CommunityPage from "./CommunityPage.jsx";
 import PrivacyPolicy from "./PrivacyPolicy.jsx";
 import TermsOfService from "./TermsOfService.jsx";
 import TrainTimetable from "./TrainTimetable.jsx";
-import app from './../assets/app.svg';
+import app from "../assets/app.png";
 function BrandMark() {
   return (
     <span className="brand-mark" aria-hidden="true">
-      {/* <svg viewBox="0 0 24 24" fill="none">
-        <path
-          d="M5 18V6h9.5a4.5 4.5 0 0 1 0 9H5m0-4h9m-9 7 3-3m-3 3-3-3m17-9v12m-3-3 3 3 3-3"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg> */}
-      <img src={app} alt="Our logo" className="app-logo" />
+      <img src={app} alt="" />
     </span>
   );
 }
