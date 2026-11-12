@@ -7,7 +7,7 @@ import TrainTimetable from "./TrainTimetable.jsx";
 function BrandMark() {
   return (
     <span className="brand-mark" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none">
+      {/* <svg viewBox="0 0 24 24" fill="none">
         <path
           d="M5 18V6h9.5a4.5 4.5 0 0 1 0 9H5m0-4h9m-9 7 3-3m-3 3-3-3m17-9v12m-3-3 3 3 3-3"
           stroke="currentColor"
@@ -15,7 +15,8 @@ function BrandMark() {
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-      </svg>
+      </svg> */}
+      <img src="./../assets/app.png" alt="Our logo" className="app-logo" />
     </span>
   );
 }
