@@ -741,6 +741,76 @@ h2 {
   padding: 0;
 }
 
+.timetable-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.timetable-tab {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #647166;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.timetable-tab[aria-selected="true"] {
+  border-color: #dce5d8;
+  color: var(--green-dark);
+  background: #eaf0e7;
+}
+
+.blocklist-card {
+  margin-top: 0;
+}
+
+.blocklist-description {
+  margin: 10px 0 18px;
+  color: #748077;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.blocklist-tools {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto;
+  align-items: end;
+  gap: 14px;
+}
+
+.blocklist-tools label {
+  margin: 0;
+}
+
+.blocklist-tools button {
+  min-height: 42px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.blocklist-summary {
+  min-height: 20px;
+  margin: 14px 0 8px;
+  color: #718077;
+  font-size: 11px;
+}
+
+.blocklist-summary.error {
+  color: #a32121;
+}
+
+.empty {
+  color: #78847b;
+  text-align: center;
+}
+
 .lookup {
   padding: 27px;
   border: 1px solid var(--line);
@@ -1084,6 +1154,10 @@ th {
 
   .lookup-head {
     flex-direction: column;
+  }
+
+  .blocklist-tools {
+    grid-template-columns: 1fr;
   }
 }
 

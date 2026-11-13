@@ -1,8 +1,9 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const API_BASE_URL = "https://api.trainseatchecker.tech/web";
 const TRAIN_LIST_URL = `${API_BASE_URL}/all-trains/info`;
 const TRAIN_SCHEDULE_URL = `${API_BASE_URL}/train-routes`;
+const BLOCKLIST_URL = `${API_BASE_URL}/seat-pairs/blacklist`;
 
 const KNOWN_TRAIN_NAMES = [
   ["Suborno Express", "701"], ["Suborno Express", "702"],
@@ -66,7 +67,162 @@ async function readJsonResponse(response, label) {
   return payload;
 }
 
+function BlockedSeatPairs() {
+  const [filter, setFilter] = useState("");
+  const [pairs, setPairs] = useState([]);
+  const [status, setStatus] = useState({
+    message: "Loading shared seat-pair list…",
+    kind: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const requestId = useRef(0);
+
+  async function loadBlocklist() {
+    const currentRequestId = ++requestId.current;
+    setLoading(true);
+    setStatus({ message: "Loading shared seat-pair list…", kind: "" });
+
+    try {
+      const response = await fetch(BLOCKLIST_URL, {
+        method: "GET",
+        headers: apiHeaders(),
+      });
+      const payload = await readJsonResponse(response, "Seat-pair blocklist API");
+      if (!Array.isArray(payload?.pairs)) {
+        throw new Error("Unexpected blocklist response: expected an array at pairs.");
+      }
+      if (currentRequestId !== requestId.current) return;
+
+      const validPairs = payload.pairs
+        .filter(
+          (pair) =>
+            pair &&
+            /^\d{1,6}$/.test(String(pair.trainNumber || "")) &&
+            typeof pair.from === "string" &&
+            typeof pair.to === "string",
+        )
+        .map((pair) => ({
+          trainNumber: String(pair.trainNumber),
+          from: pair.from,
+          to: pair.to,
+        }))
+        .sort(
+          (a, b) =>
+            a.trainNumber.localeCompare(b.trainNumber, undefined, {
+              numeric: true,
+            }) ||
+            a.from.localeCompare(b.from) ||
+            a.to.localeCompare(b.to),
+        );
+      setPairs(validPairs);
+      setStatus({
+        message: validPairs.length
+          ? "Showing shared reports of station pairs without seat allocation."
+          : "No shared seat pairs without allocation yet.",
+        kind: "",
+      });
+    } catch (error) {
+      if (currentRequestId !== requestId.current) return;
+      console.error("Could not load seat-pair blocklist:", error);
+      setStatus({
+        message: `${error instanceof Error ? error.message : String(error)} Check the Worker deployment and CORS settings.`,
+        kind: "error",
+      });
+    } finally {
+      if (currentRequestId === requestId.current) {
+        setLoading(false);
+      }
+    }
+  }
+
+  useEffect(() => {
+    loadBlocklist();
+  }, []);
+
+  const query = filter.trim();
+  const visiblePairs = pairs.filter(
+    (pair) => !query || pair.trainNumber.includes(query),
+  );
+
+  return (
+    <section className="lookup blocklist-card" aria-labelledby="blocklist-heading">
+      <div className="details-heading">
+        <h2 id="blocklist-heading">Seat pairs without allocation</h2>
+        <span className="note">
+          {loading && pairs.length === 0
+            ? "Loading…"
+            : `${visiblePairs.length} shown · ${pairs.length} total`}
+        </span>
+      </div>
+      <p className="blocklist-description">
+        Pairs with missing seat data are shared here by train. Confirmed
+        zero-seat results are not included.
+      </p>
+      <div className="blocklist-tools">
+        <label htmlFor="blocklist-filter">
+          Filter by train number
+          <input
+            id="blocklist-filter"
+            type="search"
+            inputMode="numeric"
+            placeholder="Leave empty to show all trains"
+            autoComplete="off"
+            value={filter}
+            onChange={(event) => setFilter(event.target.value)}
+          />
+        </label>
+        <button
+          className="primary"
+          type="button"
+          onClick={loadBlocklist}
+          disabled={loading}
+        >
+          {loading ? "Loading blocklist…" : "Refresh full blocklist"}
+        </button>
+      </div>
+      <p className={`blocklist-summary ${status.kind}`} role="status" aria-live="polite">
+        {status.message}
+      </p>
+      <div className="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Train</th>
+              <th scope="col">From</th>
+              <th scope="col">To</th>
+            </tr>
+          </thead>
+          <tbody>
+            {visiblePairs.length ? (
+              visiblePairs.map((pair, index) => (
+                <tr key={`${pair.trainNumber}-${pair.from}-${pair.to}-${index}`}>
+                  <td>{pair.trainNumber}</td>
+                  <td>{pair.from}</td>
+                  <td>{pair.to}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td className="empty" colSpan="3">
+                  {loading && pairs.length === 0
+                    ? "Loading seat pairs…"
+                    : status.kind === "error" && pairs.length === 0
+                      ? "Unable to load shared seat pairs."
+                      : query
+                        ? "No seat pairs without allocation for this train."
+                        : "No shared seat pairs yet."}
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
 export default function TrainTimetable() {
+  const [activeTab, setActiveTab] = useState("timetable");
   const [query, setQuery] = useState("");
   const [trains, setTrains] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
@@ -290,8 +446,50 @@ export default function TrainTimetable() {
   }
 
   return (
-    <section className="timetable" id="timetable" aria-labelledby="search-heading">
-      <div className="lookup">
+    <>
+      <div className="timetable-tabs" role="tablist" aria-label="Train information">
+        <button
+          id="timetable-tab"
+          className="timetable-tab"
+          type="button"
+          role="tab"
+          aria-selected={activeTab === "timetable"}
+          aria-controls="timetable-panel"
+          onClick={() => setActiveTab("timetable")}
+        >
+          Train timetable
+        </button>
+        <button
+          id="blocklist-tab"
+          className="timetable-tab"
+          type="button"
+          role="tab"
+          aria-selected={activeTab === "blocklist"}
+          aria-controls="blocklist-panel"
+          onClick={() => setActiveTab("blocklist")}
+        >
+          No seat allocation
+        </button>
+      </div>
+      {activeTab === "blocklist" ? (
+        <div
+          id="blocklist-panel"
+          className="timetable"
+          role="tabpanel"
+          aria-labelledby="blocklist-tab"
+          tabIndex="0"
+        >
+          <BlockedSeatPairs />
+        </div>
+      ) : (
+        <section
+          id="timetable-panel"
+          className="timetable"
+          role="tabpanel"
+          aria-labelledby="timetable-tab"
+          tabIndex="0"
+        >
+          <div className="lookup">
         <div className="lookup-head">
           <div>
             <h2 id="search-heading">Train timetable</h2>
@@ -370,10 +568,10 @@ export default function TrainTimetable() {
           <summary>Technical details</summary>
           <pre aria-live="polite">{requestTrace}</pre>
         </details>
-      </div>
+          </div>
 
-      {details && (
-        <section className="lookup details-card" aria-labelledby="details-title">
+          {details && (
+            <section className="lookup details-card" aria-labelledby="details-title">
           <div className="details-heading">
             <h2 id="details-title">{details.train_name || "Train details"}</h2>
             <span>Train {selectedTrain.number}</span>
@@ -420,8 +618,10 @@ export default function TrainTimetable() {
               </tbody>
             </table>
           </div>
+            </section>
+          )}
         </section>
       )}
-    </section>
+    </>
   );
 }

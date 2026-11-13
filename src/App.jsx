@@ -287,7 +287,7 @@ function AppPage() {
           <h1 className="app-title">Find your train.</h1>
           <p className="section-intro">
             Search the Bangladesh train list and explore a train’s full route
-            and schedule.
+            and schedule, or browse shared seat pairs without allocation.
           </p>
         </section>
         <TrainTimetable />
