@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-
 const API_BASE_URL = "https://api.trainseatchecker.tech/web";
 const TRAIN_LIST_URL = `${API_BASE_URL}/all-trains/info`;
 const TRAIN_SCHEDULE_URL = `${API_BASE_URL}/train-routes`;
 const BLOCKLIST_URL = `${API_BASE_URL}/seat-pairs/blacklist`;
-
+const VERIFIC_URL="https://eticket.railway.gov.bd/booking/train/search?fromcity=Natore&tocity=Parbatipur&doj=16-Oct-2026&class=S_CHAIR"
 const KNOWN_TRAIN_NAMES = [
   ["Suborno Express", "701"], ["Suborno Express", "702"],
   ["Mahanagar Godhuli", "703"], ["Mahanagar Godhuli", "704"],
@@ -38,6 +37,7 @@ const KNOWN_TRAIN_NAMES = [
   ["Panchagarh Express", "793"], ["Panchagarh Express", "794"],
   ["Benapole Express", "795"], ["Benapole Express", "796"],
   ["Kurigram Express", "797"], ["Kurigram Express", "798"],
+  ["PABNA GODHULI EXPRESS", "807"],["PABNA PROVATI EXPRESS", "808"],["PABNA UDBODHONI EXPRESS", "20002"]
 ];
 
 const TRAIN_NAMES_BY_NUMBER = new Map(
@@ -190,20 +190,41 @@ function BlockedSeatPairs() {
               <th scope="col">Train</th>
               <th scope="col">From</th>
               <th scope="col">To</th>
+              <th scope="col">Verify</th>
             </tr>
           </thead>
           <tbody>
             {visiblePairs.length ? (
-              visiblePairs.map((pair, index) => (
+              visiblePairs.map((pair, index) => {
+                const baseUrl = VERIFIC_URL.split('?')[0];
+                const params = new URLSearchParams(VERIFIC_URL.split('?')[1]);
+                const now = new Date();
+                const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                const doj = `${String(now.getDate()).padStart(2,'0')}-${months[now.getMonth()]}-${now.getFullYear()}`;
+                params.set('fromcity', pair.from);
+                params.set('tocity', pair.to);
+                params.set('doj', doj);
+                const verifyUrl = `${baseUrl}?${params.toString()}`;
+                return (
                 <tr key={`${pair.trainNumber}-${pair.from}-${pair.to}-${index}`}>
                   <td>{pair.trainNumber}</td>
                   <td>{pair.from}</td>
                   <td>{pair.to}</td>
+                  <td>
+                    <button
+                      type="button"
+                      className="verify-btn"
+                      onClick={() => window.open(verifyUrl, '_blank')}
+                    >
+                      Generate
+                    </button>
+                  </td>
                 </tr>
-              ))
+                );
+              })
             ) : (
               <tr>
-                <td className="empty" colSpan="3">
+                <td className="empty" colSpan="4">
                   {loading && pairs.length === 0
                     ? "Loading seat pairs…"
                     : status.kind === "error" && pairs.length === 0
