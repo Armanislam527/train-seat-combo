@@ -216,7 +216,7 @@ function BlockedSeatPairs() {
                       className="verify-btn"
                       onClick={() => window.open(verifyUrl, '_blank')}
                     >
-                      Generate
+                      Verify
                     </button>
                   </td>
                 </tr>
