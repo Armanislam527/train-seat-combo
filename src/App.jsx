@@ -23,6 +23,7 @@ function Header() {
         <nav className="nav" aria-label="Main navigation">
           <Link to="/home">Home</Link>
           <Link className="timetable-link" to="/app">Train timetable</Link>
+          <Link to="/blocked-pairs">Blocked pairs</Link>
           <Link className="nav-cta" to="/community">Join the community</Link>
         </nav>
       </div>

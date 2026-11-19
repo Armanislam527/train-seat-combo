@@ -268,7 +268,6 @@ export function BlockedSeatPairs() {
 }
 
 export default function TrainTimetable() {
-  const [activeTab, setActiveTab] = useState("timetable");
   const [query, setQuery] = useState("");
   const [trains, setTrains] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
@@ -492,49 +491,7 @@ export default function TrainTimetable() {
   }
 
   return (
-    <>
-      <div className="timetable-tabs" role="tablist" aria-label="Train information">
-        <button
-          id="timetable-tab"
-          className="timetable-tab"
-          type="button"
-          role="tab"
-          aria-selected={activeTab === "timetable"}
-          aria-controls="timetable-panel"
-          onClick={() => setActiveTab("timetable")}
-        >
-          Train timetable
-        </button>
-        <button
-          id="blocklist-tab"
-          className="timetable-tab"
-          type="button"
-          role="tab"
-          aria-selected={activeTab === "blocklist"}
-          aria-controls="blocklist-panel"
-          onClick={() => setActiveTab("blocklist")}
-        >
-          No seat allocation
-        </button>
-      </div>
-      {activeTab === "blocklist" ? (
-        <div
-          id="blocklist-panel"
-          className="timetable"
-          role="tabpanel"
-          aria-labelledby="blocklist-tab"
-          tabIndex="0"
-        >
-          <BlockedSeatPairs />
-        </div>
-      ) : (
-        <section
-          id="timetable-panel"
-          className="timetable"
-          role="tabpanel"
-          aria-labelledby="timetable-tab"
-          tabIndex="0"
-        >
+    <section className="timetable" aria-label="Train timetable">
           <div className="lookup">
         <div className="lookup-head">
           <div>
@@ -666,8 +623,6 @@ export default function TrainTimetable() {
           </div>
             </section>
           )}
-        </section>
-      )}
-    </>
+    </section>
   );
 }
