@@ -67,7 +67,7 @@ async function readJsonResponse(response, label) {
   return payload;
 }
 
-function BlockedSeatPairs() {
+export function BlockedSeatPairs() {
   const [filter, setFilter] = useState("");
   const [pairs, setPairs] = useState([]);
   const [status, setStatus] = useState({
@@ -93,6 +93,7 @@ function BlockedSeatPairs() {
       }
       if (currentRequestId !== requestId.current) return;
 
+      const seenPairs = new Set();
       const validPairs = payload.pairs
         .filter(
           (pair) =>
@@ -103,16 +104,32 @@ function BlockedSeatPairs() {
         )
         .map((pair) => ({
           trainNumber: String(pair.trainNumber),
-          from: pair.from,
-          to: pair.to,
+          from: pair.from.trim(),
+          to: pair.to.trim(),
+          seatType:
+            typeof pair.seatType === "string"
+              ? pair.seatType.trim().toUpperCase()
+              : "",
         }))
+        .filter((pair) => {
+          const key = [
+            pair.trainNumber,
+            pair.from.normalize("NFKC").replace(/\s+/g, " ").toLowerCase(),
+            pair.to.normalize("NFKC").replace(/\s+/g, " ").toLowerCase(),
+            pair.seatType,
+          ].join("|");
+          if (seenPairs.has(key)) return false;
+          seenPairs.add(key);
+          return true;
+        })
         .sort(
           (a, b) =>
             a.trainNumber.localeCompare(b.trainNumber, undefined, {
               numeric: true,
             }) ||
             a.from.localeCompare(b.from) ||
-            a.to.localeCompare(b.to),
+            a.to.localeCompare(b.to) ||
+            a.seatType.localeCompare(b.seatType),
         );
       setPairs(validPairs);
       setStatus({
@@ -139,9 +156,14 @@ function BlockedSeatPairs() {
     loadBlocklist();
   }, []);
 
-  const query = filter.trim();
+  const query = filter.trim().toLowerCase();
   const visiblePairs = pairs.filter(
-    (pair) => !query || pair.trainNumber.includes(query),
+    (pair) =>
+      !query ||
+      pair.trainNumber.includes(query) ||
+      pair.from.toLowerCase().includes(query) ||
+      pair.to.toLowerCase().includes(query) ||
+      pair.seatType.toLowerCase().includes(query),
   );
 
   return (
@@ -160,7 +182,7 @@ function BlockedSeatPairs() {
       </p>
       <div className="blocklist-tools">
         <label htmlFor="blocklist-filter">
-          Filter by train number
+          Filter by train, station, or seat type
           <input
             id="blocklist-filter"
             type="search"
@@ -190,6 +212,7 @@ function BlockedSeatPairs() {
               <th scope="col">Train</th>
               <th scope="col">From</th>
               <th scope="col">To</th>
+              <th scope="col">Seat type</th>
               <th scope="col">Verify</th>
             </tr>
           </thead>
@@ -204,12 +227,14 @@ function BlockedSeatPairs() {
                 params.set('fromcity', pair.from);
                 params.set('tocity', pair.to);
                 params.set('doj', doj);
+                if (pair.seatType) params.set('class', pair.seatType);
                 const verifyUrl = `${baseUrl}?${params.toString()}`;
                 return (
-                <tr key={`${pair.trainNumber}-${pair.from}-${pair.to}-${index}`}>
+                <tr key={`${pair.trainNumber}-${pair.from}-${pair.to}-${pair.seatType}-${index}`}>
                   <td>{pair.trainNumber}</td>
                   <td>{pair.from}</td>
                   <td>{pair.to}</td>
+                  <td>{pair.seatType || "All"}</td>
                   <td>
                     <button
                       type="button"
@@ -224,7 +249,7 @@ function BlockedSeatPairs() {
               })
             ) : (
               <tr>
-                <td className="empty" colSpan="4">
+                <td className="empty" colSpan="5">
                   {loading && pairs.length === 0
                     ? "Loading seat pairs…"
                     : status.kind === "error" && pairs.length === 0

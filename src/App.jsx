@@ -2,7 +2,7 @@ import { Link, Navigate, Route, Routes } from "react-router-dom";
 import CommunityPage from "./CommunityPage.jsx";
 import PrivacyPolicy from "./PrivacyPolicy.jsx";
 import TermsOfService from "./TermsOfService.jsx";
-import TrainTimetable from "./TrainTimetable.jsx";
+import TrainTimetable, { BlockedSeatPairs } from "./TrainTimetable.jsx";
 import app from "../assets/app.png";
 function BrandMark() {
   return (
@@ -296,12 +296,31 @@ function AppPage() {
   );
 }
 
+function BlockedPairsPage() {
+  return (
+    <PageLayout>
+      <main className="wrap app-page">
+        <section className="section-heading">
+          <p className="eyebrow">Shared reports</p>
+          <h1 className="app-title">Seat pairs without allocation.</h1>
+          <p className="section-intro">
+            Browse train station pairs reported as having no seat allocation,
+            shared here by train and seat type.
+          </p>
+        </section>
+        <BlockedSeatPairs />
+      </main>
+    </PageLayout>
+  );
+}
+
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/home" replace />} />
       <Route path="/home" element={<LandingPage />} />
       <Route path="/app" element={<AppPage />} />
+      <Route path="/blocked-pairs" element={<BlockedPairsPage />} />
       <Route
         path="/community"
         element={
