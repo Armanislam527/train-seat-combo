@@ -65,22 +65,23 @@ function PageLayout({ children }) {
 function LandingPage() {
   usePageMeta(
     "Seat Combo — Bangladesh Train Timetable & Seat Pair Checker",
-    "Plan your Bangladesh train journey with Seat Combo. Search train timetables, routes and stop-by-stop schedules, and find ticketable seat pairs across the country.",
+    "Plan your journey with Seat Combo — the train seat checker and train ticket finder for Bangladesh Railway. Search train timetables, track train seats, and find ticketable seat pairs.",
   );
   return (
     <PageLayout>
       <main>
         <section className="wrap hero" aria-labelledby="hero-title">
           <div>
-            <p className="eyebrow">A better way to plan your rail journey</p>
+            <p className="eyebrow">Plan your journey with Bangladesh Railway</p>
             <h1 id="hero-title">
               Every seat pair.
               <br />
               <span>One simple journey.</span>
             </h1>
             <p className="hero-copy">
-              Find your train, see the stops, and discover more ways to get
-              there. Bangladesh rail travel, made a little clearer.
+              Seat Combo is a train seat checker and train ticket finder for
+              Bangladesh Railway. Find your train, track train seats, and
+              discover ticketable seat pairs — making your journey easier.
             </p>
             <div className="hero-actions">
               <Link className="button" to="/app">
@@ -214,26 +215,26 @@ function LandingPage() {
           <div className="feature-grid">
             <article className="feature">
               <span className="feature-icon" aria-hidden="true">⌕</span>
-              <h3>Search your route</h3>
+              <h3>Plan your journey</h3>
               <p>
-                Choose your stations, travel date, and seat class to get
-                started.
+                Choose your stations, travel date, and seat class to find your
+                train.
               </p>
             </article>
             <article className="feature">
               <span className="feature-icon" aria-hidden="true">⌁</span>
-              <h3>Explore seat pairs</h3>
+              <h3>Find train seats</h3>
               <p>
-                Check ticketable combinations between stops along your
-                journey.
+                Track your seat options — check ticketable combinations between
+                stops along your journey.
               </p>
             </article>
             <article className="feature">
               <span className="feature-icon" aria-hidden="true">▤</span>
               <h3>Know the timetable</h3>
               <p>
-                Look up train names, numbers, operating days, and stop-by-stop
-                schedules.
+                Look up Bangladesh Railway train names, numbers, operating
+                days, and stop-by-stop schedules.
               </p>
             </article>
           </div>
@@ -247,7 +248,7 @@ function LandingPage() {
           <div className="wrap">
             <div className="section-heading">
               <p className="eyebrow">Three small steps</p>
-              <h2 id="steps-title">Your next trip, made simpler.</h2>
+              <h2 id="steps-title">Make your journey easier, step by step.</h2>
               <p className="section-intro">
                 From choosing a route to finding a train that fits.
               </p>
@@ -267,10 +268,10 @@ function LandingPage() {
               </article>
               <article className="step">
                 <span className="step-number">03 / YOUR SEAT</span>
-                <h3>Find a seat pair</h3>
+                <h3>Find your seat</h3>
                 <p>
-                  Check available station-to-station tickets with your railway
-                  session.
+                  Check available station-to-station train tickets with your
+                  railway session before you book your seat.
                 </p>
               </article>
             </div>
@@ -287,7 +288,7 @@ function LandingPage() {
 function AppPage() {
   usePageMeta(
     "Bangladesh Train Timetable & Schedule — Seat Combo",
-    "Search the Bangladesh train list, view train schedules, routes and stop-by-stop timings, and check ticketable seat pairs for your journey.",
+    "Train seat checker and train ticket finder for Bangladesh Railway. Search the Bangladesh train list, view train schedules and stop-by-stop timings, and track your seat with real-time train seat tracking.",
   );
   return (
     <PageLayout>
