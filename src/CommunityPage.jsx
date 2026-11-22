@@ -1,4 +1,10 @@
+import { usePageMeta } from "./usePageMeta.js";
+
 export default function CommunityPage() {
+  usePageMeta(
+    "Join the Seat Combo Community",
+    "Join the Seat Combo community to test the Bangladesh train timetable app, share feedback, and help improve the application.",
+  );
   return (
     <main className="wrap community-page">
       <section className="community-card" aria-labelledby="community-title">

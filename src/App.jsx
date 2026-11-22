@@ -1,4 +1,5 @@
 import { Link, Navigate, Route, Routes } from "react-router-dom";
+import { usePageMeta } from "./usePageMeta.js";
 import CommunityPage from "./CommunityPage.jsx";
 import PrivacyPolicy from "./PrivacyPolicy.jsx";
 import TermsOfService from "./TermsOfService.jsx";
@@ -62,6 +63,10 @@ function PageLayout({ children }) {
 }
 
 function LandingPage() {
+  usePageMeta(
+    "Seat Combo — Bangladesh Train Timetable & Seat Pair Checker",
+    "Plan your Bangladesh train journey with Seat Combo. Search train timetables, routes and stop-by-stop schedules, and find ticketable seat pairs across the country.",
+  );
   return (
     <PageLayout>
       <main>
@@ -280,6 +285,10 @@ function LandingPage() {
 }
 
 function AppPage() {
+  usePageMeta(
+    "Bangladesh Train Timetable & Schedule — Seat Combo",
+    "Search the Bangladesh train list, view train schedules, routes and stop-by-stop timings, and check ticketable seat pairs for your journey.",
+  );
   return (
     <PageLayout>
       <main className="wrap app-page">
@@ -298,6 +307,10 @@ function AppPage() {
 }
 
 function BlockedPairsPage() {
+  usePageMeta(
+    "Blocked Train Seat Pairs — Seat Combo",
+    "Browse Bangladesh train station pairs reported as having no seat allocation, shared by train and seat type.",
+  );
   return (
     <PageLayout>
       <main className="wrap app-page">

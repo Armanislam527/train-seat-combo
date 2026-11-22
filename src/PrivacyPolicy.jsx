@@ -1,4 +1,7 @@
+import { usePageMeta } from "./usePageMeta.js";
+
 export default function PrivacyPolicy() {
+  usePageMeta("Privacy Policy — Seat Combo");
   return (
     <main className="wrap policy-page">
       <header className="policy-heading">

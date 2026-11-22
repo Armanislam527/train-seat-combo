@@ -1,4 +1,7 @@
+import { usePageMeta } from "./usePageMeta.js";
+
 export default function TermsOfService() {
+  usePageMeta("Terms of Service — Seat Combo");
   return (
     <main className="wrap policy-page">
       <header className="policy-heading">
